@@ -13,12 +13,11 @@ class Spotsmen
 	private string disc;
 	private double a;
 	public double attempt { get { return a; } }
-	public Spotsmen(string f1, double a1, double a2, string d)
+	public Spotsmen(string f1, double a1, double a2)
 	{
 		famile = f1;
 		attempt1 = a1;
 		attempt2 = a2;
-		disc = d;
 		if (attempt1 < attempt2)
 		{
 			a = attempt2;
@@ -30,16 +29,18 @@ class Spotsmen
 	}
 	public void print_attempts()
 	{
-		Console.WriteLine($"famile: {famile}\t rez: {attempt1}, {attempt2}\t дисквалификация: {d}");
+		Console.WriteLine($"famile: {famile}\t rez: {attempt1}, {attempt2}");
 	}
 	public void Disc()
 	{
-		if (d == "yes")
+		if (attempt<1.50 || attempt > 1.80)
 		{
-			Console.WriteLine($"участник {famile} дисквалифицирован");
+			disc = "yes";
+			Console.WriteLine($"famile: {famile}\t дисквалифицирован");
 		}
 		else
 		{
+			disc="no";
 			Console.WriteLine($"famile: {famile}\t rez: {attempt}");
 		}
 	}
@@ -50,11 +51,11 @@ class program
 	{
 		Spotsmen[] sport = new Spotsmen[5]
 		{
-		new Spotsmen("sp1", 1.53, 1.67, "no"),
-		new Spotsmen("sp2", 1.73, 1.37, "no"),
-		new Spotsmen("sp3", 1.32, 1.14, "yes"),
-		new Spotsmen("sp4", 1.81, 1.65, "no"),
-		new Spotsmen("sp5", 1.55, 1.56, "yes")
+		new Spotsmen("sp1", 1.53, 1.67),
+		new Spotsmen("sp2", 1.73, 1.37),
+		new Spotsmen("sp3", 1.32, 1.14),
+		new Spotsmen("sp4", 1.81, 1.65),
+		new Spotsmen("sp5", 1.55, 1.56)
 		};
 		double[] x = new double[5];
 		Console.WriteLine("начальная таблица:");
@@ -64,31 +65,48 @@ class program
 			x[i] = sport[i].attempt;
 		}
 		Console.WriteLine();
-		Sort(x, sport);
 		Console.WriteLine("промежуточная таблица:");
 		for (int i = 0; i < 5; i++)
 		{
 			sport[i].Disc();
 		}
 		Console.WriteLine();
+		Sort(x, sport);
+		Del(sport);
 		Console.WriteLine("итоговая таблица:");
 		for (int i = 0; i < 5; i++)
 		{
-			if (sport[i].d == "no")
-			{
-				sport[i].Disc();
-			}
+			if (sport[i].d!="yes")
+			sport[i].Disc();
 			else
 			{
 				break;
 			}
 		}
-
+		static void Del(Spotsmen[] sport)	//удаление элементов 
+		{
+			int[] k = new int[5];
+			for(int i=0;  i<5; i++)
+			{
+				if (sport[i].d == "yes")
+				{
+					k[i] = i;
+				}
+			}
+			int x = 0;
+			for (int i = k[x] + 1; i < 5; i++)
+			{
+				sport[i - 1] = sport[i];
+				if (k[x+1]!=0)
+					x++;
+			}
+		}
 		static void Sort(double[] x, Spotsmen[] sport)
 		{
-			for (int i = 0; i < 5; i++)
+			int n = 5;
+			for (int i = 0; i < n; i++)
 			{
-				for (int j = 0; j < 5 - 1; j++)
+				for (int j = 0; j < n - 1; j++)
 				{
 					if (x[j] < x[j + 1])
 					{
@@ -141,26 +159,28 @@ class program
 	}
 	private class student : human
 	{
-		private string stud;
-		public student(string f, string s, int mark1, int mark2, int mark3, int mark4) : base (f, mark1, mark2, mark3, mark4) 
+		private static Random random = new Random();
+		private int stud = random.Next(100,150);
+		private int nomer_stud;
+		public student(string f, int mark1, int mark2, int mark3, int mark4) : base(f, mark1, mark2, mark3, mark4)
 		{
-			stud = s;
+			nomer_stud = stud;
 		}
 		public override void print()
 		{
 			base.print();
-			Console.Write($"  \tстуденческий: {stud}");
+			Console.Write($"  \tстуденческий: {nomer_stud}");
 			Console.WriteLine();
 		}
 	}
 	static void Main()
 	{
 		student[] st = new student[5];
-		st[0] = new student("студент1", "123", 5, 5, 2, 5);
-		st[1] = new student("студент2", "324", 5, 4, 5, 5);
-		st[2] = new student("студент3", "652", 3, 2, 3, 4);
-		st[3] = new student("студент4", "583", 4, 2, 5, 5);
-		st[4] = new student("студент5", "799", 3, 5, 4, 3);
+		st[0] = new student("студент1", 5, 5, 2, 5);
+		st[1] = new student("студент2", 5, 4, 5, 5);
+		st[2] = new student("студент3", 3, 2, 3, 4);
+		st[3] = new student("студент4", 4, 2, 5, 5);
+		st[4] = new student("студент5", 3, 5, 4, 3);
 		double[] x = new double[5];
 		for (int i = 0; i < st.Length; i++)
 		{
@@ -193,6 +213,10 @@ class program
 		}
 	}
 }
+
+
+
+
 
 
 
