@@ -22,19 +22,19 @@ class Program
 		}
 		public void print1()
 		{
-			int[] chast = new int[26]; //массив с частотой букв
+			char[]x=new char[33];
+			int[] chast = new int[33]; //массив с частотой букв
 			char[] Text1 = Text.ToCharArray();
-			for (int i = 0; i < 26; i++)
+			for (int i = 0; i < 33; i++)
 			{
-				int ch = Text1.Count(l => l == "abcdefghijklmnopqrstuvwxyz"[i]); //подсчёт частоты каждой буквы
+				int ch = Text1.Count(l => l == "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"[i]); //подсчёт частоты каждой буквы
 				chast[i] = ch; //присваивание массиву частоту
+				x[i] = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"[i];
 			}
-			int x = 97;
-			for (int i = 0; i < 26; i++)
+			for (int i = 0; i < 33; i++)
 			{
 				double chastota = (double)chast[i] / Text.Length;
-				Console.WriteLine($"буква {(char)x} встречается {chastota}");
-				x++;
+				Console.WriteLine($"буква {x[i]} встречается {chastota}");
 			}
 		}
 	}
@@ -91,40 +91,45 @@ class Program
 				chast[i] = ch; //присваивание массиву частоту
 			}
 			int[,] text = new int[26, 2];
-			for(int i = 0; i<26; i++)
+			for (int i = 0; i < 26; i++)
 			{
-				for(int j= 0; j < 2; j++)
+				for (int j = 0; j < 2; j++)
 				{
 					text[i, 0] = i; //буква
 					text[i, 1] = chast[i]; //её частота
 				}
 			}
-			for (int i = 0; i < 26-1; i++)
+			for (int i = 0; i < 26 - 1; i++)
 			{
-				for (int j = 0; j < 26-1-i; j++)
+				for (int j = 0; j < 26 - 1 - i; j++)
 				{
 					if (text[j, 1] < text[j + 1, 1])
 					{
 						for (int k = 0; k < 2; k++)
 						{
-							(text[j,k], text[j+1, k]) = (text[j+1, k], text[j, k]);
+							(text[j, k], text[j + 1, k]) = (text[j + 1, k], text[j, k]);
 						}
 					}
 				}
 			}
 			int[] bukva = new int[26];
-			int[]chastota = new int[26];
+			int[] chastota = new int[26];
 			for (int i = 0; i < 26; i++)
 			{
 				{
-					bukva[i] = text[i,0]+97;
-					chastota[i] = text[i,1];
+					bukva[i] = text[i, 0] + 97;
+					chastota[i] = text[i, 1];
 				}
 			}
 			for (int i = 0; i < 26; i++)
 			{
+				if (chastota[i]!=0)
 				{
 					Console.WriteLine($"буква {(char)bukva[i]}, частота {chastota[i]}");
+				}
+				else
+				{
+					break;
 				}
 			}
 		}
@@ -202,7 +207,7 @@ class Program
 			string[] text11 = Text.Split(' ', '.', ',', '!', '?', ':', ';');
 			foreach (string s in text11)
 			{
-				if (s == "1" || s == "2" || s == "3" || s == "4" || s == "5" || s == "6" || s == "7" || s == "8" || s == "9" || s =="10")
+				if (s == "1" || s == "2" || s == "3" || s == "4" || s == "5" || s == "6" || s == "7" || s == "8" || s == "9" || s == "10")
 				{
 					sum += int.Parse(s);
 				}
@@ -214,7 +219,7 @@ class Program
 	static void Main()
 	{
 		Console.WriteLine("Task1");
-		Task1 t1 = new Task1("William Shakespeare, widely regarded as one of the greatest writers in the English language, authored a total of 37 plays, along with numerous poems and sonnets. He was born in Stratford-upon-Avon, England, in 1564, and died in 1616. Shakespeare's most famous works, including \"Romeo and Juliet,\" \"Hamlet,\" \"Macbeth,\" and \"Othello,\" were written during the late 16th and early 17th centuries. \"Romeo and Juliet,\" a tragic tale of young love, was penned around 1595. \"Hamlet,\" one of his most celebrated tragedies, was written in the early 1600s, followed by \"Macbeth,\" a gripping drama exploring themes of ambition and power, around 1606. \"Othello,\" a tragedy revolving around jealousy and deceit, was also composed during this period, believed to be around 1603.");
+		Task1 t1 = new Task1("После многолетних исследований ученые обнаружили тревожную тенденцию в вырубке лесов Амазонии. Анализ данных показал, что основной участник разрушения лесного покрова – человеческая деятельность. За последние десятилетия рост объема вырубки достиг критических показателей. Главными факторами, способствующими этому, являются промышленные рубки, производство древесины, расширение сельскохозяйственных угодий и незаконная добыча древесины. Это приводит к серьезным экологическим последствиям, таким как потеря биоразнообразия, ухудшение климата и угроза вымирания многих видов животных и растений. ");
 		t1.print1();
 		Console.WriteLine();
 
