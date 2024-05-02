@@ -1,0 +1,244 @@
+//1 уровень
+//4
+//Результаты соревнований по прыжкам в высоту определяются по лучшей из двух 
+//попыток.Вывести список участников в порядке занятых мест
+
+using System;
+using System.Runtime.Intrinsics.Arm;
+public struct spotsmen
+{
+	private string famile;
+	private double attempt1, attempt2;
+	public double attempt { get { return attempt1; } }
+	public spotsmen(string f1, double a1, double a2)
+	{
+		famile = f1;
+		attempt1 = a1;
+		attempt2 = a2;
+		if (attempt1 < attempt2)
+		{
+			attempt1 = attempt2;
+		}
+	}
+	public void print_attempts()
+	{
+		Console.WriteLine($"famile: {famile}\t rez: {attempt1}, {attempt2}");
+	}
+	public void print()
+	{
+		Console.WriteLine($"famile: {famile}\t rez: {attempt}");
+	}
+}
+class program
+{
+	static void Main()
+	{
+		spotsmen[] sport = new spotsmen[5];
+		sport[0] = new spotsmen("sp1", 1.53, 1.67);
+		sport[1] = new spotsmen("sp2", 1.73, 1.37);
+		sport[2] = new spotsmen("sp3", 1.32, 1.14);
+		sport[3] = new spotsmen("sp4", 1.8, 1.6);
+		sport[4] = new spotsmen("sp5", 1.5, 1.56);
+		double[] x = new double[5];
+		for (int i = 0; i < 5; i++)
+		{
+			sport[i].print_attempts();
+			x[i] = sport[i].attempt;
+		}
+		Sort(x, sport);
+		Console.WriteLine();
+		for (int i = 0; i < 5; i++)
+		{
+			sport[i].print();
+		}
+
+		static void Sort(double[] x, spotsmen[] sport)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < 5 - 1; j++)
+				{
+					if (x[j] < x[j + 1])
+					{
+						(sport[j + 1], sport[j]) = (sport[j], sport[j + 1]);
+						(x[j + 1], x[j]) = (x[j], x[j + 1]);
+					}
+				}
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+//2 уровень
+//1
+//Студенты одной группы в сессию сдают четыре экзамена. Составить список 
+//студентов, средний балл которых по всем экзаменам не менее «4». Результаты 
+//вывести в виде таблицы с заголовком в порядке убывания среднего балла
+
+using System;
+class program
+{
+	struct student
+	{
+		private string famile;
+		private double mark;
+		public double m { get { return mark; } }
+		public student(string f, int mark1, int mark2, int mark3, int mark4)
+		{
+			famile = f;
+			mark = (double)(mark1 + mark2 + mark3 + mark4) / 4;
+		}
+		public void print()
+		{
+			Console.WriteLine($"фамилия {famile}\t балл {mark}");
+		}
+
+	}
+	static void Main()
+	{
+		student[] st = new student[5];
+		st[0] = new student("студент1", 5, 5, 2, 5);
+		st[1] = new student("студент2", 5, 4, 5, 5);
+		st[2] = new student("студент3", 3, 2, 3, 4);
+		st[3] = new student("студент4", 4, 2, 5, 5);
+		st[4] = new student("студент5", 3, 5, 4, 3);
+		double[] x = new double[5];
+		for (int i = 0; i < st.Length; i++)
+		{
+			st[i].print();
+			x[i] = st[i].m;
+		}
+		Sort(x, st);
+		static void Sort(double[]x, student[]st)
+		{
+			for (int i = 0; i < st.Length; i++)
+			{
+				for (int j = 0; j < st.Length - 1; j++)
+				{
+					if (x[j] < x[j + 1])
+					{
+						(st[j], st[j + 1]) = (st[j + 1], st[j]);
+						(x[j], x[j + 1]) = (x[j + 1], x[j]);
+					}
+				}
+			}
+		}
+		Console.WriteLine();
+		for (int i = 0; i < st.Length; i++)
+		{
+			if (st[i].m >= 4)
+			{
+				st[i].print();
+			}
+			else break;
+		}
+	}
+}
+
+
+
+
+
+
+//3 уровень
+//1
+//Результаты сессии содержат оценки 5 экзаменов по каждой группе. Определить 
+//средний балл для трех групп студентов одного потока и выдать список групп в 
+//порядке убывания среднего бала. Результаты вывести в виде таблицы с 
+//заголовком
+struct students
+{
+	private string group;
+	private string famile;
+	private double mark;
+	public double m { get {return mark; } }
+	public string g {  get { return group; } }
+	public students(string g, string f, int mark1, int mark2, int mark3, int mark4, int mark5)
+	{
+		group = g;
+		famile = f;
+		mark = (double)(mark1 + mark2 + mark3 + mark4 + mark5) / 5;
+	}
+	public void print()
+	{
+		Console.WriteLine($"группа: {group}, фамилия: {famile}\t средний балл: {mark}");
+	}
+
+}
+class programm
+{
+	static void Main()
+	{
+		int n = 9;
+		students[] st = new students[n];
+		st[0] = new students("group1", "student1", 2, 4, 3, 5, 3);
+		st[1] = new students("group1", "student2", 3, 3, 4, 5, 2);
+		st[2] = new students("group1", "student3", 4, 5, 5, 4, 5);
+		st[3] = new students("group2", "student4", 3, 4, 4, 2, 2);
+		st[4] = new students("group2", "student5", 2, 4, 4, 5, 2);
+		st[5] = new students("group2", "student6", 4, 4, 4, 4, 4);
+		st[6] = new students("group3", "student7", 2, 5, 3, 5, 3);
+		st[7] = new students("group3", "student8", 4, 5, 5, 4, 5);
+		st[8] = new students("group3", "student9", 3, 5, 4, 3, 4);
+		double[]mark_st= new double[9];
+		double[]mark_g= new double[3];
+		double m1=0, m2=0, m3=0;
+		for (int i = 0; i < n; i++)
+		{
+			st[i].print();
+			mark_st[i] = st[i].m;
+			if (st[i].g== "group1")
+			{
+				m1+= st[i].m;
+			}
+			else if (st[i].g== "group2")
+			{
+				m2+= st[i].m;
+			}
+			else m3 += st[i].m;
+		}
+		mark_g[0] = (double)m1/3;
+		mark_g[1] = (double)m2/3;
+		mark_g[2] = (double)m3/3;
+		Sort(mark_st, st);
+		Console.WriteLine();
+		for (int i = 0; i < n; i++)
+		{
+			st[i].print();
+		}
+		Console.WriteLine();
+		for (int i=0; i < 3; i++)
+		{
+			Console.WriteLine($"группа: {i+1}, балл: {mark_g[i]}");
+		}
+		static void Sort(double[]mark_st, students[]st)
+		{
+			for(int i=0; i<9;i++)
+			{
+				for(int j=0; j<9-1;j++)
+				{
+					if (mark_st[j] < mark_st[j+1])
+					{
+						(mark_st[j], mark_st[j + 1]) = (mark_st[j + 1], mark_st[j]);
+						(st[j + 1], st[j]) = (st[j], st[j + 1]);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+
