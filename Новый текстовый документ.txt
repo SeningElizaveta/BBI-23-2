@@ -1,0 +1,74 @@
+//2 уровень
+//1
+//Студенты одной группы в сессию сдают четыре экзамена. Составить список 
+//студентов, средний балл которых по всем экзаменам не менее «4». Результаты 
+//вывести в виде таблицы с заголовком в порядке убывания среднего балла
+
+using System;
+class program
+{
+    struct student
+    {
+        private string famile;
+        private double mark;
+        public double m { get { return mark; } }
+        public student(string f, int mark1, int mark2, int mark3, int mark4)
+        {
+            famile = f;
+            mark = (double)(mark1 + mark2 + mark3 + mark4) / 4;
+        }
+        public void print()
+        {
+            Console.WriteLine($"фамилия {famile}\t балл {mark}");
+        }
+        public void array()
+        {
+
+        }
+        public void Sort(double[] x, student[] st)
+        {
+            for (int i = 1; i < x.Length; i++)
+            {
+                int c = i;
+                double k = x[i];
+                student stt = st[i];
+                while (c > 0 && k > x[c - 1])
+                {
+                    x[c] = x[c - 1];
+                    st[c] = st[c - 1];
+                    c--;
+                }
+                x[c] = k;
+                st[c] = stt;
+            }
+        }
+    }
+    static void Main()
+    {
+        student[] st = new student[5];
+        st[0] = new student("студент1", 5, 5, 2, 5);
+        st[1] = new student("студент2", 5, 4, 5, 5);
+        st[2] = new student("студент3", 3, 2, 3, 4);
+        st[3] = new student("студент4", 4, 2, 5, 5);
+        st[4] = new student("студент5", 3, 5, 4, 3);
+        double[] x = new double[5];
+        for (int i = 0; i < st.Length; i++)
+        {
+            st[i].print();
+            x[i] = st[i].m; 
+        }
+        for (int i = 0; i < st.Length; i++)
+        {
+            st[i].Sort(x, st);
+            
+        }
+        Console.WriteLine();
+        for (int i = 0; i <st.Length; i++)
+        {
+            if (st[i].m >= 4)
+            {
+                st[i].print();
+            }
+        }
+    }
+}
